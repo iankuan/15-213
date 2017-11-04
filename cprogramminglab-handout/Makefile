@@ -1,6 +1,8 @@
 CC = gcc
 CFLAGS = -O0 -g -Wall -Werror
 
+.PHONY: all clean test
+
 all: qtest
 	-tar -cf handin.tar queue.c queue.h
 
@@ -19,4 +21,3 @@ clean:
 	rm -f *.o *~ qtest 
 	rm -rf *.dSYM
 	(cd traces; rm -f *~)
-
