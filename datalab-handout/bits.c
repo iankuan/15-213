@@ -139,7 +139,7 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return 2;
+  return ~(~x|~y);
 }
 /* 
  * getByte - Extract byte n from word x
@@ -150,15 +150,8 @@ int bitAnd(int x, int y) {
  *   Rating: 2
  */
 int getByte(int x, int n) {
-
-
-
-
-
-
-
-  return 2;
-
+  int shift = n << 3; /* Transfer byte unit to bit unit */
+  return (x >> shift) & 0xff;
 }
 /* 
  * logicalShift - shift x to the right by n, using a logical shift
@@ -169,7 +162,10 @@ int getByte(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return 2;
+  int b31 = !!n << 31;
+  /* Shift right by n-1 (n? n - 1: 0) */
+  int mask = ~(b31 >> (n) << (!!n));
+  return (x >> n) & mask;
 }
 /*
  * bitCount - returns count of number of 1's in word
@@ -189,7 +185,15 @@ int bitCount(int x) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return 2;
+  int fold = x;
+
+  fold = fold >> 16 | fold;
+  fold = fold >> 8 | fold;
+  fold = fold >> 4 | fold;
+  fold = fold >> 2 | fold;
+  fold = fold >> 1 | fold;
+
+  return ~fold & 0x1;
 }
 /* 
  * tmin - return minimum two's complement integer 
@@ -198,7 +202,7 @@ int bang(int x) {
  *   Rating: 1
  */
 int tmin(void) {
-  return 2;
+  return 0x1 << 31;
 }
 /* 
  * fitsBits - return 1 if x can be represented as an 
@@ -231,7 +235,7 @@ int divpwr2(int x, int n) {
  *   Rating: 2
  */
 int negate(int x) {
-  return 2;
+  return ~x + 1;
 }
 /* 
  * isPositive - return 1 if x > 0, return 0 otherwise 
@@ -241,7 +245,7 @@ int negate(int x) {
  *   Rating: 3
  */
 int isPositive(int x) {
-  return 2;
+  return !((0x1 << 31) & x) & !!x;
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -251,7 +255,10 @@ int isPositive(int x) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  return 2;
+  /* FIXME: failed on int overflow */
+  int neg_x = ~x + 1;
+  int sub = y + neg_x; /* y - x >= 0 */
+  return !(sub & (0x1 << 31));
 }
 /*
  * ilog2 - return floor(log base 2 of x), where x > 0
