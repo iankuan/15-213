@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, world!\n");
+foo();
+    printf("Hello, world!\n", 12345);
 }
 
