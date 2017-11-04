@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O0 -ggdb3 -std=c99 -Wall -Werror
+CFLAGS = -O0 -ggdb3 -std=gnu99 -Wall -Werror
 
 .PHONY: all clean test
 
