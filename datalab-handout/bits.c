@@ -168,7 +168,8 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return ~(~x|~y);
+  return ~(~x|~y); /* De'Morgan: ~(x & y) = ~x | ~y */
+                   /*        =>  x & y = ~(~x | ~y) */
 }
 /* 
  * getByte - Extract byte n from word x
@@ -191,9 +192,8 @@ int getByte(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  int b31 = !!n << 31;
-  /* Shift right by n-1 (n? n - 1: 0) */
-  int mask = ~(b31 >> (n) << (!!n));
+  int b31 = !!n << 31;               /* Just return 0 if n == 0 */
+  int mask = ~(b31 >> (n) << (!!n)); /* Shift right by n-1 (n? n - 1: 0) */
   return (x >> n) & mask;
 }
 /*
@@ -220,10 +220,15 @@ int bitCount(int x) {
   msk3 = bm | bm << 16;
   msk4 = ~(~0 << 16);
 
+  /* abcd => 0b0d + 0a0b */
   res = (res & msk0) + ((res >> 1) & msk0);
+  /* abcd => 00cd + 00ab */
   res = (res & msk1) + ((res >> 2) & msk1);
+  /* abcdefgh => efgh + abcd */
   res = (res & msk2) + ((res >> 4) & msk2);
+  /* abcdefgh ijklmnop => abcdefgh + ijklmnop */
   res = (res & msk3) + ((res >> 8) & msk3);
+  /* And so on */
   res = (res & msk4) + ((res >> 16) & msk4);
 
   return res;
