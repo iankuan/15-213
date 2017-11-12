@@ -128,8 +128,37 @@ NOTES:
  *   2. Use the BDD checker to formally verify that your solutions produce 
  *      the correct answers.
  */
+#endif
 
+/* Useful trick */
+#if 0
+    /* De'Morgan */
+    ~(x & y) = ~x | ~y;
+    ~(x | y) = ~x & ~y;
 
+    /* XOR */
+    x ^ y ^ x = y;
+
+    /* Constant */
+    -1 = ~0 = 0xf...f;
+    0xffffffff = ~0;
+
+    /* Transform */
+    -x = ~x + 1;
+    !(n) = n? 0: 1;
+    !!(n) = n? 1: 0;
+
+    /* Conditional */
+    x = y <=> x ^ y = 0;
+
+    cond ? x: y => mask = !!(cond) << 31 >> 31; return (x & mask) | (y & ~mask);
+                => mask = !(cond) << 31 >> 31; return (x & ~mask) | (y & mask);
+                => mask = ~!!(cond) + 1; return (x & mask) | (y & ~mask);
+                => mask = ~!(cond) + 1; return (x & ~mask) | (y & mask);
+
+    /* Mapping */
+    x  = -x => 0 or INT_MIN;
+    x << 1 == 0 => 0 or INT_MIN;
 #endif
 /* 
  * bitAnd - x&y using only ~ and | 
