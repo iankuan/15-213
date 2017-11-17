@@ -1,0 +1,14 @@
+# Useful tricks
+
+## Show symbol tables
+objdump -t ELF
+
+## Show disassembly code
+objudump -S ELF
+
+## Show all printable strings
+strings ELF
+### Show strings along with location
+strings -to ELF
+### Only show stings in data section
+strings -d ELF
