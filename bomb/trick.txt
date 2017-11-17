@@ -18,3 +18,6 @@ x/10s addr
 
 # Phase 2
 n n ... n and guess
+
+# Phase 3
+## Jumping Table. Just tracing it and evaluate the address expression
