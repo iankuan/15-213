@@ -338,7 +338,16 @@ int ilog2(int x) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
- return 2;
+  /* FP format
+   * 1      8       23
+   * sign   exp     frac
+   */
+  unsigned exp = uf >> 23 & 0xff;
+  /* Determine f is NaN or not */
+  if (exp ^ 0xff || !(uf << 9))
+      uf ^= (1 << 31);
+
+  return uf;
 }
 /* 
  * float_i2f - Return bit-level equivalent of expression (float) x
