@@ -43,8 +43,12 @@ static int get_num_val(char *sval, unsigned *valp) {
 
 void show_int(unsigned uf)
 {
-  printf("Hex = 0x%.8x,\tSigned = %d,\tUnsigned = %u\n",
+  printf("Hex = 0x%.8x,\tSigned = %d,\tUnsigned = %u,",
 	 uf, (int) uf, uf);
+  printf("\tTwo's complement = ");
+  for (unsigned i = 1 << 31; i != 0; i >>= 1)
+      printf("%d", !!(uf & i));
+  printf("\n");
 }
 
 
