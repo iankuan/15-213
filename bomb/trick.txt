@@ -12,3 +12,6 @@ strings ELF
 strings -to ELF
 ### Only show stings in data section
 strings -d ELF
+
+# Phase 1
+x/10s addr
