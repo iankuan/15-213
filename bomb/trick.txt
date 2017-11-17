@@ -15,3 +15,6 @@ strings -d ELF
 
 # Phase 1
 x/10s addr
+
+# Phase 2
+n n ... n and guess
