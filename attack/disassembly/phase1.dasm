@@ -1,7 +1,7 @@
 Dump of assembler code for function test:
    0x0000000000401968 <+0>:	sub    $0x8,%rsp
    0x000000000040196c <+4>:	mov    $0x0,%eax
-   0x0000000000401971 <+9>:	callq  0x4017a8 <getbuf>
+   0x0000000000401971 <+9>:	callq  0x4017a8 <getbuf>                            /* Target -8*/
    0x0000000000401976 <+14>:	mov    %eax,%edx
    0x0000000000401978 <+16>:	mov    $0x403188,%esi
    0x000000000040197d <+21>:	mov    $0x1,%edi
@@ -11,7 +11,7 @@ Dump of assembler code for function test:
    0x0000000000401990 <+40>:	retq   
 End of assembler dump.
 Dump of assembler code for function getbuf:
-   0x00000000004017a8 <+0>:	sub    $0x28,%rsp
+   0x00000000004017a8 <+0>:	sub    $0x28,%rsp                                   /* -40 */
    0x00000000004017ac <+4>:	mov    %rsp,%rdi
    0x00000000004017af <+7>:	callq  0x401a40 <Gets>
    0x00000000004017b4 <+12>:	mov    $0x1,%eax
