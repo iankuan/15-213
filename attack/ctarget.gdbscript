@@ -1,1 +1,4 @@
 start -q
+b test
+b getbuf
+b Gets
